@@ -1,7 +1,7 @@
 <html land="ru">
   <head>
     <title>Стяжка пола в Ульяновске, 300р кв.м. по ГОСТу | Кликай</title>
-    <meta name="Description" content="Стяжка пола в Ульяновске любой сложности, наливные полы, теплыйе полы, недорого и качественно.">
+    <meta name="Description" content="Стяжка пола в Ульяновске любой сложности, наливные полы, теплые полы, недорого и качественно.">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -109,6 +109,24 @@
         </div>
       </div>
     </div>
+    <dev class="contact-form block">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-md-offset-3">
+            <h3 class="text-center">Форма обратной связи</h3>
+            <form action="https://formspree.io/manager@prof-styazka-pola.ru" method="post" data-role="feedback-form">
+              <div class="form-group">
+                <div class="alert alert-success" style="display: none">Сообщение отправлено</div>
+                <input type="hidden" name="_subject" value="Feedback form message">
+                <input type="number" class="form-control" name="phone" placeholder="Ваш номер телефона"><br>
+                <textarea name="comment" class="form-control" placeholder="Коментарий к заявке (не обязательно)"></textarea><br>
+                <button type="submit" class="btn btn-danger">Отправить</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </dev>
     <div class="footer block">
       <div class="container">
         <div class="row">
@@ -152,7 +170,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Оставить заявку</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <button type="button" class="" lass="btn btn-default" data-dismiss="modal">Закрыть</button>
           </div>
         </div>
 
@@ -188,6 +206,39 @@
           target.blur();
           return false
         });
+
+        objectifyForm = function(form) {
+          formArray = form.serializeArray();
+          var returnArray = {};
+          for (var i = 0; i < formArray.length; i++){
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+          }
+          return returnArray;
+        }
+
+        var is_feedback_form_active = true
+        $('*[data-role="feedback-form"]').on('submit', function(e){
+          var target = $(this);
+          var alert = target.find('.alert-success');
+
+          if(!is_feedback_form_active) { return false }
+          is_feedback_form_active = false
+
+          $.ajax({
+            url: "https://formspree.io/manager@prof-styazka-pola.ru",
+            method: "POST",
+            data: JSON.stringify(objectifyForm(target)),
+            dataType: "json",
+            // headers: {'X-Alt-Referer': 'prof-styazka-pola.ru'},
+            success: function(){
+              alert.fadeIn('slow');
+              setTimeout(function(){ alert.fadeOut('slow') }, 5000);
+              is_feedback_form_active = true;
+            }
+          });
+
+          return false
+        })
 
         var forceRedraw = function(e){
           var disp = e.css('display');
