@@ -227,7 +227,7 @@
           $.ajax({
             url: "https://formspree.io/manager@prof-styazka-pola.ru",
             method: "POST",
-            data: JSON.stringify(objectifyForm(target)),
+            data: objectifyForm(target),
             dataType: "json",
             // headers: {'X-Alt-Referer': 'prof-styazka-pola.ru'},
             success: function(){
